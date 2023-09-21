@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  name: -application
+  namespace: argocd
+spec:
+  destination:
+    namespace: -ns
+    name: in-cluster
+  project: default
+  source:
+    path: .tekton
+    repoURL: github.com?owner=my-silly-organisation&repo=test
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
